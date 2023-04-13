@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  oracledb:
+    image: container-registry.oracle.com/database/standard:19.3.0.0
+    container_name: oracledb_container
+    environment:
+      ORACLE_SID: 'ORCLCDB'
+      ORACLE_PDB: 'ORCLPDB1'
+      ORACLE_PWD: 'YourStrong!Passw0rd'
+    ports:
+      - '1521:1521'
+    volumes:
+      - ./oracledb_data:/opt/oracle/oradata
+      - ./oracledb_scripts:/opt/oracle/scripts/setup
+
+volumes:
+  oracledb_data:
+  oracledb_scripts:

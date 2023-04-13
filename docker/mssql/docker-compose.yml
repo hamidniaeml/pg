@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql_container
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'YourStrong!Passw0rd'
+      MSSQL_PID: 'Developer'
+    ports:
+      - '1433:1433'
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./backup:/var/opt/mssql/backup
+
+volumes:
+  mssql_backup:

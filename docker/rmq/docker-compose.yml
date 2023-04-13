@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  rabbit1:
+    image: rabbitmq:3.9-management
+    hostname: rabbit1
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=mysecretcookie
+      - RABBITMQ_NODENAME=rabbit1@rabbit1
+      - RABBITMQ_MANAGEMENT_SSL_CERTFILE=/etc/rabbitmq/tls/server_cert.pem
+      - RABBITMQ_MANAGEMENT_SSL_KEYFILE=/etc/rabbitmq/tls/server_key.pem
+      - RABBITMQ_MANAGEMENT_SSL_CACERTFILE=/etc/rabbitmq/tls/ca_cert.pem
+    volumes:
+      - ./tls:/etc/rabbitmq/tls
+    networks:
+      - rabbitmq
+    ports:
+      - 15671:15671
+
+  rabbit2:
+    image: rabbitmq:3.9-management
+    hostname: rabbit2
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=mysecretcookie
+      - RABBITMQ_NODENAME=rabbit2@rabbit2
+      - RABBITMQ_MANAGEMENT_SSL_CERTFILE=/etc/rabbitmq/tls/server_cert.pem
+      - RABBITMQ_MANAGEMENT_SSL_KEYFILE=/etc/rabbitmq/tls/server_key.pem
+      - RABBITMQ_MANAGEMENT_SSL_CACERTFILE=/etc/rabbitmq/tls/ca_cert.pem
+    volumes:
+      - ./tls:/etc/rabbitmq/tls
+    networks:
+      - rabbitmq
+    depends_on:
+      - rabbit1
+
+networks:
+  rabbitmq:
